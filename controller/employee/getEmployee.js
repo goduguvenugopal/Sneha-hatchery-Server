@@ -29,4 +29,28 @@ const getAllEmployees = async (req, res) => {
       .json({ success: false, message: "Internal server error" });
   }
 };
-module.exports -= getAllEmployees
+
+// get single employee
+const getSingleEmp = async (req, res) => {
+  try {
+    const empId = req.empId;
+    const empData = await Employee.findById(empId);
+    if (empData) {
+      return res.status(403).json({
+        success: true,
+        data: empData,
+        message: "retrieved employee data successfully.",
+      });
+    }
+    return res.status(404).json({
+      success: false,
+      message: "employee data not found.",
+    });
+  } catch (error) {
+    console.error("❌ Server Error:", error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+module.exports = {getAllEmployees , getSingleEmp}

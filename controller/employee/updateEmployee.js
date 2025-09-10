@@ -7,6 +7,7 @@ const updateEmployee = async (req, res) => {
     const { id } = req.params;
     const employeeData = req.body;
 
+    // checks the employee 
     const retrievedEmp = await Employee.findById(empId);
     if (!retrievedEmp) {
       return res
@@ -14,6 +15,7 @@ const updateEmployee = async (req, res) => {
         .json({ success: false, message: "Employee not found" });
     }
 
+    // checks the employee has access based on designation
     if (!["incharge", "manager"].includes(retrievedEmp.designation)) {
       return res.status(403).json({
         success: false,
@@ -21,6 +23,7 @@ const updateEmployee = async (req, res) => {
       });
     }
 
+    // updates the employee details 
     const updatedEmp = await Employee.findByIdAndUpdate(id, employeeData, {
       new: true,
       runValidators: true,
