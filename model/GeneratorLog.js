@@ -33,8 +33,12 @@ const generatorLogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    employee: {
+    employeeName: {
       type: String,
+      required: true,
+    },
+    employeeCode: {
+      type: Number,
       required: true,
     },
   },
