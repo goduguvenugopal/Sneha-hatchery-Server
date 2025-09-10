@@ -1,5 +1,6 @@
-const GeneratorLog = require("../../model/GeneratorLog")
-const Subscription = require("../../model/Subscription")
+const GeneratorLog = require("../../model/GeneratorLog");
+const Subscription = require("../../model/Subscription");
+const { startGeneratorCron } = require("../cron/generatorCron");
 const webpush = require("../utils/webPush");
 const cron = require("node-cron");
 
@@ -20,35 +21,8 @@ const startGenerator = async (req, res) => {
 
     const savedLog = await newLog.save();
 
-// Schedule notification every 20 minutes
-cron.schedule("*/20 * * * *", async () => {
-  try {
-    const log = await GeneratorLog.findById(savedLog._id);
-    if (!log) return;
-
-    // Only proceed if generator is ON
-    if (log.status === "on") {
-      const minutesRunning = (Date.now() - log.onTime.getTime()) / 60000;
-
-      const allSubs = await Subscription.find();
-      allSubs.forEach((sub) => {
-        webpush
-          .sendNotification(
-            sub.subscription,
-            JSON.stringify({
-              title: "⚡ Generator Reminder",
-              body: `Generator ${log.generatorId} has been running for ${Math.floor(
-                minutesRunning
-              )} minutes. Please check power status.`,
-            })
-          )
-          .catch((err) => console.error("Push Error:", err));
-      });
-    }
-  } catch (err) {
-    console.error("Cron Job Error:", err);
-  }
-});
+    // Schedule notification every 20 minutes
+    startGeneratorCron(savedLog);
 
     return res.status(201).json({ success: true, data: savedLog });
   } catch (error) {
@@ -57,4 +31,4 @@ cron.schedule("*/20 * * * *", async () => {
   }
 };
 
-module.exports = startGenerator
+module.exports = startGenerator;

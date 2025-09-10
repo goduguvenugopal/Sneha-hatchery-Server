@@ -1,4 +1,5 @@
 const GeneratorLog = require("../../model/GeneratorLog");
+const { stopGeneratorCron } = require("../cron/generatorCron");
 
 // Update generator log (turn OFF)
 const stopGenerator = async (req, res) => {
@@ -15,6 +16,8 @@ const stopGenerator = async (req, res) => {
     log.duration = `${Math.floor((log.offTime - log.onTime) / 60000)} minutes`;
 
     const updatedLog = await log.save();
+    // Stop cron job for this generator
+    stopGeneratorCron(id);
 
     return res.status(200).json({ success: true, data: updatedLog });
   } catch (error) {
