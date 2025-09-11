@@ -6,12 +6,14 @@ const generatorLogSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-
     shift: {
       type: String,
       required: true,
     },
-
+    empId: {
+      type: String,
+      required: true,
+    },
     onTime: {
       type: Date,
       required: true,
@@ -22,7 +24,7 @@ const generatorLogSchema = new mongoose.Schema(
     },
 
     duration: {
-      type: String,
+      type: Number,
     },
 
     generatorId: {
@@ -33,9 +35,13 @@ const generatorLogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    employeeName: {
+    fisrtEmpName: {
       type: String,
       required: true,
+    },
+    secondEmpName: {
+      type: String,
+      required: false,
     },
     employeeCode: {
       type: Number,

@@ -4,20 +4,23 @@ const { stopGeneratorCron } = require("../cron/generatorCron");
 // Update generator log (turn OFF)
 const stopGenerator = async (req, res) => {
   try {
-    const { id } = req.params;
-    const log = await GeneratorLog.findById(id);
+    const { generatorId } = req.params;
+    let log = await GeneratorLog.findById(generatorId);
+    const empId = req.empId; // logged-in user id
 
-    if (!log) {
+    const retrievedEmp = await Employee.findById(empId);
+    if (!log || !retrievedEmp) {
       return res.status(404).json({ message: "Log not found" });
     }
 
     log.offTime = new Date();
     log.status = "off";
-    log.duration = `${Math.floor((log.offTime - log.onTime) / 60000)} minutes`;
+    log.duration = Math.floor((log.offTime - log.onTime) / 60000)
+    log.secondEmpName = retrievedEmp.employeeName;
 
     const updatedLog = await log.save();
     // Stop cron job for this generator
-    stopGeneratorCron(id);
+    stopGeneratorCron(generatorId);
 
     return res.status(200).json({ success: true, data: updatedLog });
   } catch (error) {

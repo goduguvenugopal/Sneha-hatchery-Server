@@ -18,6 +18,10 @@ const employeeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  password: {
+    type: Number,
+    required:  false,
+  },
   address: {
     type: String,
     required: false,

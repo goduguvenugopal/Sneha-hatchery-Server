@@ -3,8 +3,8 @@ const Employee = require("../../model/Empolyee");
 // DELETE employee
 const deleteEmployee = async (req, res) => {
   try {
-    const empId = req.empId;
     const { id } = req.params;
+    const empId = req.empId;
 
     const retrievedEmp = await Employee.findById(empId);
     if (!retrievedEmp) {

@@ -1,13 +1,11 @@
 const GeneratorLog = require("../../model/GeneratorLog");
-const Subscription = require("../../model/Subscription");
 const { startGeneratorCron } = require("../cron/generatorCron");
-const webpush = require("../utils/webPush");
-const cron = require("node-cron");
 
 // Create generator log (turn ON)
 const startGenerator = async (req, res) => {
   try {
-    const { shift, generatorId, employeeName, employeeCode } = req.body;
+    const { shift, generatorId, fisrtEmpName, employeeCode } = req.body;
+    const empId = req.empId; // logged-in user id
 
     const newLog = new GeneratorLog({
       logDate: new Date(),
@@ -15,8 +13,9 @@ const startGenerator = async (req, res) => {
       onTime: new Date(),
       generatorId,
       status: "on",
-      employeeName,
+      fisrtEmpName,
       employeeCode,
+      empId,
     });
 
     const savedLog = await newLog.save();
