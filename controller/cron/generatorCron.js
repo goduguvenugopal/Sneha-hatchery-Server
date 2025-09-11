@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const GeneratorLog = require("../../model/GeneratorLog");
 const Subscription = require("../../model/Subscription");
-const webpush = require("../utils/webPush");
+const webpush = require("../../utils/webPush");
 
 // Map to keep track of active cron jobs
 const activeCrons = new Map();
@@ -26,7 +26,9 @@ function startGeneratorCron(savedLog) {
             sub.subscription,
             JSON.stringify({
               title: "⚡ Generator Reminder",
-              body: `Generator ${log.generatorId} has been running for ${Math.floor(
+              body: `Generator ${
+                log.generatorId
+              } has been running for ${Math.floor(
                 minutesRunning
               )} minutes. Please check power status.`,
             })
@@ -43,6 +45,7 @@ function startGeneratorCron(savedLog) {
   return task;
 }
 
+// stop generator cron schedule function 
 function stopGeneratorCron(generatorLogId) {
   const task = activeCrons.get(generatorLogId.toString());
   if (task) {

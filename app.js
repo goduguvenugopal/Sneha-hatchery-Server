@@ -4,7 +4,9 @@ const app = express();
 const cors = require("cors");
 const connectToDatabase = require("./config/database");
 const corsOptions = require("./utils/cors");
-const employeeRoutes = require("./routes/employeeRoutes")
+const employeeRoutes = require("./routes/employeeRoutes");
+const generatorLogRoutes = require("./routes/generatorLogsRoutes");
+const subscriptionRoutes = require("./routes/subscriptionRoutes")
 
 
 // middlewares
@@ -14,8 +16,8 @@ app.use(cors("*"));
 
 // Register all Employee routes with a global "/api" prefix
 app.use("/api", employeeRoutes);
-
-
+app.use("/api", generatorLogRoutes);
+app.use("/api", subscriptionRoutes);
 
 const PORT = process.env.PORT || 3000;
 
