@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 // CREATE employee
 const addEmployee = async (req, res) => {
   try {
-    const { employeeName, employeeCode, designation, mobile , password } = req.body;
+    const { employeeName, employeeCode, designation, mobile, password } =
+      req.body;
     const empId = req.empId; // logged-in user id
 
     // find logged-in employee
@@ -38,7 +39,7 @@ const addEmployee = async (req, res) => {
       employeeCode,
       designation,
       mobile,
-      password
+      password,
     });
 
     // save employee
@@ -64,9 +65,10 @@ const loginEmp = async (req, res) => {
     const isEmpExist = await Employee.findOne({ employeeCode });
 
     // generate token if emp already exists in db
-    const token = jwt.sign({ empId: isEmpExist._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "30m",
-    });
+    const token = jwt.sign(
+      { empId: isEmpExist._id },
+      process.env.JWT_SECRET_KEY
+    );
 
     if (isEmpExist) {
       return res.status(200).json({
@@ -80,7 +82,6 @@ const loginEmp = async (req, res) => {
       success: false,
       message: "Employee not found",
     });
-    
   } catch (error) {
     console.error("❌ Server Error:", error.message);
     return res
