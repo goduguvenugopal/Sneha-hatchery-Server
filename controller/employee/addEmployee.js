@@ -64,23 +64,21 @@ const loginEmp = async (req, res) => {
     // check if employee already exists by code
     const isEmpExist = await Employee.findOne({ employeeCode });
 
+    if (!isEmpExist) {
+      return res.status(404).json({
+        success: false,
+        message: "Employee not found",
+      });
+    }
     // generate token if emp already exists in db
     const token = jwt.sign(
       { empId: isEmpExist._id },
       process.env.JWT_SECRET_KEY
     );
-
-    if (isEmpExist) {
-      return res.status(200).json({
-        success: true,
-        token,
-        message: "logged in successfully",
-      });
-    }
-
-    return res.status(404).json({
-      success: false,
-      message: "Employee not found",
+    return res.status(200).json({
+      success: true,
+      token,
+      message: "logged in successfully",
     });
   } catch (error) {
     console.error("❌ Server Error:", error.message);

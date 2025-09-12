@@ -36,7 +36,7 @@ const getSingleEmp = async (req, res) => {
     const empId = req.empId;
     const empData = await Employee.findById(empId);
     if (empData) {
-      return res.status(403).json({
+      return res.status(200).json({
         success: true,
         data: empData,
         message: "retrieved employee data successfully.",
