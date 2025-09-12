@@ -1,15 +1,16 @@
 const GeneratorLog = require("../../model/GeneratorLog");
 const { startGeneratorCron } = require("../cron/generatorCron");
+const getShift = require("./getShift");
 
 // Create generator log (turn ON)
 const startGenerator = async (req, res) => {
   try {
-    const { shift, generatorId, fisrtEmpName, employeeCode } = req.body;
+    const { generatorId, fisrtEmpName, employeeCode } = req.body;
     const empId = req.empId; // logged-in user id
 
     const newLog = new GeneratorLog({
       logDate: new Date(),
-      shift,
+      shift : getShift(),
       onTime: new Date(),
       generatorId,
       status: "on",
