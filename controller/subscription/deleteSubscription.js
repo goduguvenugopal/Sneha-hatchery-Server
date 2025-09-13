@@ -1,10 +1,10 @@
 const Subscription = require("../../model/Subscription");
 
-
 // Delete subscription by employeeCode or endpoint
 const deleteSubscription = async (req, res) => {
   try {
-    const { employeeCode, endpoint } = req.body;
+    const { endpoint } = req.body;
+    const employeeCode = req.empId; // logged-in user id
 
     let deleted;
 
