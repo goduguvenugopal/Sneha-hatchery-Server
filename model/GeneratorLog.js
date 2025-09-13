@@ -35,7 +35,7 @@ const generatorLogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    fisrtEmpName: {
+    firstEmpName: {
       type: String,
       required: true,
     },

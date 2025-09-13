@@ -5,7 +5,7 @@ const getShift = require("./getShift");
 // Create generator log (turn ON)
 const startGenerator = async (req, res) => {
   try {
-    const { generatorId, fisrtEmpName, employeeCode } = req.body;
+    const { generatorId, firstEmpName, employeeCode } = req.body;
     const empId = req.empId; // logged-in user id
 
     const newLog = new GeneratorLog({
@@ -14,7 +14,7 @@ const startGenerator = async (req, res) => {
       onTime: new Date(),
       generatorId,
       status: "on",
-      fisrtEmpName,
+      firstEmpName,
       employeeCode,
       empId,
     });
