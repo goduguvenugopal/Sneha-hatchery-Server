@@ -22,7 +22,7 @@ const stopGenerator = async (req, res) => {
     // Stop cron job for this generator
     stopGeneratorCron(generatorId);
 
-    return res.status(200).json({ success: true, data: updatedLog });
+    return res.status(200).json({message : "Generator Off Successfully", success: true, data: updatedLog });
   } catch (error) {
     console.error("❌ Stop generator error:", error.message);
     return res.status(500).json({ success: false, message: "Server error" });

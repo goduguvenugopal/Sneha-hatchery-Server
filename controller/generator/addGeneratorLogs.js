@@ -24,7 +24,7 @@ const startGenerator = async (req, res) => {
     // Schedule notification every 20 minutes
     startGeneratorCron(savedLog);
 
-    return res.status(201).json({ success: true, data: savedLog });
+    return res.status(201).json({ success: true,message : "Generator ON successfully", data: savedLog });
   } catch (error) {
     console.error("❌ Start generator error:", error.message);
     return res.status(500).json({ success: false, message: "Server error" });
