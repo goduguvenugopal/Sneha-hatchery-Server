@@ -1,3 +1,4 @@
+const Employee = require("../../model/Empolyee");
 const GeneratorLog = require("../../model/GeneratorLog");
 const { stopGeneratorCron } = require("../cron/generatorCron");
 
@@ -16,13 +17,13 @@ const stopGenerator = async (req, res) => {
     log.offTime = new Date();
     log.status = "off";
     log.duration = Math.floor((log.offTime - log.onTime) / 60000)
-    log.secondEmpName = retrievedEmp.employeeName;
+    log.secondEmpName = retrievedEmp?.employeeName;
 
     const updatedLog = await log.save();
     // Stop cron job for this generator
     stopGeneratorCron(generatorId);
 
-    return res.status(200).json({message : "Generator Off Successfully", success: true, data: updatedLog });
+    return res.status(200).json({message : "Generator Stopped Successfully", success: true, data: updatedLog });
   } catch (error) {
     console.error("❌ Stop generator error:", error.message);
     return res.status(500).json({ success: false, message: "Server error" });
