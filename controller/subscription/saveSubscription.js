@@ -3,8 +3,7 @@ const Subscription = require("../../model/Subscription");
 // Save subscription from client
 const saveSubscription = async (req, res) => {
   try {
-    const { subscription } = req.body;
-    const employeeCode = req.empId; // logged-in user id
+    const { employeeCode, subscription } = req.body;
 
     // check if subscription already exists
     const existing = await Subscription.findOne({
@@ -33,4 +32,4 @@ const saveSubscription = async (req, res) => {
   }
 };
 
-module.exports = saveSubscription;
+module.exports = saveSubscription
