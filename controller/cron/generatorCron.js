@@ -7,7 +7,7 @@ const webpush = require("../../utils/webPush");
 const activeCrons = new Map();
 
 function startGeneratorCron(savedLog) {
-  const task = cron.schedule("*/15 * * * *", async () => {
+  const task = cron.schedule("*/10 * * * *", async () => {
     try {
       const log = await GeneratorLog.findById(savedLog._id);
       if (!log || log.status !== "on") {
@@ -30,7 +30,7 @@ function startGeneratorCron(savedLog) {
                 log.generatorId
               } has been running for ${Math.floor(
                 minutesRunning
-              )} minutes.${log.fisrtEmpName} Please check power status.`,
+              )} minutes. ${log.firstEmpName} Please check power status.`,
             })
           )
           .catch((err) => console.error("Push Error:", err));
