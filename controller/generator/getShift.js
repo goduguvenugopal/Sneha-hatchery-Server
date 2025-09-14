@@ -1,21 +1,31 @@
 // get shift function based on current time
-const getShift = () => {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
 
-  // A shift: 09:00 - 16:59
-  if (hours > 9 && hours < 17) return "A";
-  if (hours === 9 && minutes >= 0) return "A";
-  if (hours === 16 && minutes < 60) return "A";
+function getShift(date = new Date()) {
+  const d = new Date(date);
+  const hours = d.getHours();
+  const minutes = d.getMinutes();
+  const totalMinutes = hours * 60 + minutes; // 0 .. 1439
 
-  // B shift: 17:00 - 00:59
-  if (hours > 17 || hours < 1) return "B";
-  if (hours === 17 && minutes >= 0) return "B";
-  if (hours === 0 && minutes < 60) return "B";
+  const A_start = 9 * 60; // 09:00 => 540
+  const A_end = 17 * 60; // 17:00 => 1020
 
-  // C shift: 01:00 - 08:59
-  return "C";
-};
+  const B_start = 17 * 60; // 17:00 => 1020
+  const B_end = 1 * 60; // 01:00 => 60 (next day)
+
+  const C_start = 1 * 60; // 01:00 => 60
+  const C_end = 9 * 60; // 09:00 => 540
+
+  // Shift A: 09:00 <= t < 17:00
+  if (totalMinutes >= A_start && totalMinutes < A_end) return "A";
+
+  // Shift B: 17:00 <= t <= 23:59 OR 00:00 <= t < 01:00 (wrap around)
+  if (totalMinutes >= B_start || totalMinutes < B_end) return "B";
+
+  // Shift C: 01:00 <= t < 09:00
+  if (totalMinutes >= C_start && totalMinutes < C_end) return "C";
+
+  // Fallback
+  return "Unknown";
+}
 
 module.exports = getShift;

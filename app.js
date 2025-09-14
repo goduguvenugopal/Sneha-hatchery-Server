@@ -6,8 +6,8 @@ const connectToDatabase = require("./config/database");
 const corsOptions = require("./utils/cors");
 const employeeRoutes = require("./routes/employeeRoutes");
 const generatorLogRoutes = require("./routes/generatorLogsRoutes");
-const subscriptionRoutes = require("./routes/subscriptionRoutes")
-
+const subscriptionRoutes = require("./routes/subscriptionRoutes");
+ 
 
 // middlewares
 app.use(express.json());
