@@ -1,23 +1,20 @@
 const Subscription = require("../../model/Subscription");
 
-
 // Delete subscription by employeeCode or endpoint
 const deleteSubscription = async (req, res) => {
   try {
-    const { employeeCode, endpoint } = req.body;
+    const { endpoint } = req.body;
 
     let deleted;
 
-    if (employeeCode) {
-      deleted = await Subscription.findOneAndDelete({ employeeCode });
-    } else if (endpoint) {
+    if (endpoint) {
       deleted = await Subscription.findOneAndDelete({
         "subscription.endpoint": endpoint,
       });
     } else {
       return res.status(400).json({
         success: false,
-        message: "Provide employeeCode or subscription endpoint",
+        message: "Provide subscription endpoint",
       });
     }
 
