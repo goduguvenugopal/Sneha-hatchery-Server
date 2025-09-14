@@ -4,8 +4,14 @@ const jwt = require("jsonwebtoken");
 // CREATE employee
 const addEmployee = async (req, res) => {
   try {
-    const { employeeName, employeeCode, designation, mobile, password } =
-      req.body;
+    const {
+      employeeName,
+      employeeCode,
+      designation,
+      mobile,
+      password,
+      address,
+    } = req.body;
     const empId = req.empId; // logged-in user id
 
     // find logged-in employee
@@ -40,6 +46,7 @@ const addEmployee = async (req, res) => {
       designation,
       mobile,
       password,
+      address,
     });
 
     // save employee
@@ -47,7 +54,7 @@ const addEmployee = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Employee saved successfully",
+      message: "Employee added successfully",
     });
   } catch (error) {
     console.error("❌ Server Error:", error.message);
