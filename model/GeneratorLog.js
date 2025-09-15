@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const generatorLogSchema = new mongoose.Schema(
   {
     logDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     shift: {
