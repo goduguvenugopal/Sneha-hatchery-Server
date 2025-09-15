@@ -8,9 +8,10 @@ const startGenerator = async (req, res) => {
     const { generatorId, firstEmpName, employeeCode } = req.body;
     const empId = req.empId; // logged-in user id
 
-    const todayDate = new Date().toLocaleDateString("en-GB", {
-      timeZone: "Asia/Kolkata",
-    });
+    const date = new Date();
+    const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+    const istDate = new Date(utc + 5.5 * 60 * 60 * 1000);
+    const todayDate = istDate.toLocaleDateString("en-GB");
 
     const newLog = new GeneratorLog({
       logDate: todayDate,

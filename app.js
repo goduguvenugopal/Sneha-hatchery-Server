@@ -9,8 +9,6 @@ const generatorLogRoutes = require("./routes/generatorLogsRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const getShift = require("./controller/generator/getShift");
  
-
- 
 // middlewares
 app.use(express.json());
 app.use(cors("*"));
