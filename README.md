@@ -1,23 +1,56 @@
-📌 Hatchery Management System – Backend
+ ⚡ Generator Logs Management System – Backend
 
-This is the backend service for the Hatchery Management System. Built with Node.js, Express, and MongoDB, it provides REST APIs to manage daily hatchery operations.
+This is the backend service for the Generator Logs Management System. It powers the APIs for managing generator runtime logs, employees, role-based access, cron jobs, and Web Push Notifications to keep employees informed in real-time.
 
-🔹 Features
+📌 Features
+🔹 Generator Logs
 
-Employee Management – CRUD operations with role-based access (manager/incharge permissions).
+Log generator onTime, offTime, duration.
 
-Generator Tracking – Logs generator runtime with start/stop status and operator details.
+Auto-calculate duration in minutes → hours & minutes.
 
-Egg Tracking (upcoming) – Monitor egg production, stock, and usage.
+Retrieve logs with filters (date range, generator ID, status).
 
-Duty Management (upcoming) – Assign and track employee duties & shifts.
+Export/print-ready logs for reporting.
 
-🔹 Tech Stack
+🔹 Employees
 
-Node.js + Express – RESTful API
+Employee CRUD operations (Create, Read, Update, Delete).
 
-MongoDB + Mongoose – Database
+Role-based access:
 
-JWT Auth (optional) – Secure role-based access
+Employee → Operate generators & log usage.
 
-CORS Configurable – Restrict API access to specific origins
+Incharge → Access admin dashboard & view all logs.
+
+Manager → Full admin control + employee management.
+
+🔹 Cron Jobs & Alerts
+
+node-cron runs every 10 minutes.
+
+Automatically calculates running duration.
+
+Triggers web push notifications for all employees to stay updated.
+
+🔹 Web Push Notifications
+
+Uses Web Push + Service Workers to send real-time alerts.
+
+Employees receive instant “Generator Running Duration” updates.
+
+Works across desktop & mobile browsers.
+
+⚙️ Tech Stack
+
+Node.js – Runtime environment.
+
+Express.js – REST API framework.
+
+MongoDB + Mongoose – NoSQL database & ODM.
+
+node-cron – Scheduled tasks for duration alerts.
+
+web-push – For sending push notifications to clients.
+
+dotenv – Environment variable management.
