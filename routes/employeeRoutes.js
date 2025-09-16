@@ -5,6 +5,7 @@ const { addEmployee, loginEmp } = require("../controller/employee/addEmployee");
 const {
   getSingleEmp,
   getAllEmployees,
+  getSingleEmpById,
 } = require("../controller/employee/getEmployee");
 const updateEmployee = require("../controller/employee/updateEmployee")
 const deleteEmployee = require("../controller/employee/deleteEmployee");
@@ -14,6 +15,7 @@ router.post("/login/employee", loginEmp);
 router.post("/add/employee", verifyToken, addEmployee);
 router.get("/get/single/employee", verifyToken, getSingleEmp);
 router.get("/get/all/employees", verifyToken, getAllEmployees);
+router.get("/get/single/employee/by/:dbid", verifyToken, getSingleEmpById);
 router.put("/update/single/employee/:id", verifyToken, updateEmployee );
 router.delete("/delete/single/employee/:id", verifyToken, deleteEmployee);
 

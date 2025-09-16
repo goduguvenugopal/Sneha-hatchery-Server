@@ -37,7 +37,7 @@ const updateEmployee = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Employee updated successfully",
+      message: "Employee details updated",
     });
   } catch (error) {
     console.error("❌ Server Error:", error.message);

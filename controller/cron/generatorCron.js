@@ -29,8 +29,10 @@ function startGeneratorCron(savedLog) {
               body: `Generator ${
                 log.generatorId
               } has been running for ${Math.floor(
-                minutesRunning
-              )} minutes. ${log.firstEmpName} Please check power status.`,
+                minutesRunning / 60
+              )}h ${Math.floor(
+                minutesRunning % 60
+              )}m . ${log.firstEmpName} Please check power status.`,
             })
           )
           .catch((err) => console.error("Push Error:", err));
