@@ -20,9 +20,9 @@ function startGeneratorCron(savedLog) {
       const minutesRunning = (Date.now() - log.onTime.getTime()) / 60000;
 
       const allSubs = await Subscription.find();
-      allSubs.forEach((sub) => {
-        webpush
-          .sendNotification(
+      allSubs.forEach(async (sub) => {
+        try {
+          await webpush.sendNotification(
             sub.subscription,
             JSON.stringify({
               title: "⚡ Generator Reminder",
@@ -30,12 +30,25 @@ function startGeneratorCron(savedLog) {
                 log.generatorId
               } has been running for ${Math.floor(
                 minutesRunning / 60
-              )}h ${Math.floor(
-                minutesRunning % 60
-              )}m . ${log.firstEmpName} Please check power status.`,
+              )}h ${Math.floor(minutesRunning % 60)}m. ${
+                log.firstEmpName
+              }, please check power status.`,
             })
-          )
-          .catch((err) => console.error("Push Error:", err));
+          );
+        } catch (err) {
+          if (err.statusCode === 410 || err.statusCode === 404) {
+            console.warn(
+              "❌ Removing expired subscription:",
+              sub.subscription.endpoint
+            );
+            // 🔥 Remove from DB so it doesn’t keep failing
+            await Subscription.deleteOne({
+              "subscription.endpoint": sub.subscription.endpoint,
+            });
+          } else {
+            console.error("Push Error:", err);
+          }
+        }
       });
     } catch (err) {
       console.error("Cron Job Error:", err);
@@ -47,7 +60,7 @@ function startGeneratorCron(savedLog) {
   return task;
 }
 
-// stop generator cron schedule function 
+// stop generator cron schedule function
 function stopGeneratorCron(generatorLogId) {
   const task = activeCrons.get(generatorLogId.toString());
   if (task) {
