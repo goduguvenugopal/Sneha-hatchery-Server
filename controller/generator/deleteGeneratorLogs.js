@@ -26,7 +26,7 @@ const deleteLog = async (req, res) => {
 
     if (!log) return res.status(404).json({ message: "Log not found" });
 
-    return res.status(200).json({ success: true, message: "Log deleted" });
+    return res.status(200).json({ success: true, message: "Generator Log deleted" });
   } catch (error) {
     console.error("❌ Delete log error:", error.message);
     return res.status(500).json({ success: false, message: "Server error" });

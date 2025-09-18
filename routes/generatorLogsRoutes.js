@@ -10,6 +10,6 @@ const verifyToken = require("../utils/middleware");
 router.post("/generator/start", verifyToken, startGenerator);
 router.put("/generator/stop/:generatorId", verifyToken, stopGenerator);
 router.get("/generator/logs", verifyToken, getAllLogs);
-router.delete("/generator/log/:generatorId", verifyToken, deleteLog);
+router.delete("/generator/delete/log/:generatorId", verifyToken, deleteLog);
 
 module.exports = router;
